@@ -1,0 +1,184 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes fadeToRight {
+  from {
+    opacity: 0%;
+    transform: translateX(-10%);
+  }
+  to {
+    opacity: 100%;
+    transform: translateX(0);
+  }
+}
+.main {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: -1;
+}
+
+.mainLogin {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: -1;
+}
+
+.videoHome {
+  position: fixed;
+  top: -80%;
+  right: 0%;
+  bottom: 0%;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+  transform: translateX(calc((100% - 100vw) / 2));
+}
+
+.videoLogin {
+  position: fixed;
+  top: -80%;
+  right: 0%;
+  bottom: 0%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translateX(calc((100% - 100vw) / 2));
+  z-index: -2;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+.overlayLogin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: -1;
+}
+
+.flexblueyellow {
+  display: flex;
+  height: 1%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.bluebox {
+  width: 30%;
+  height: 100%;
+  background-color: #83eeff;
+}
+.yellowbox {
+  width: 10%;
+  height: 100%;
+  background-color: #ff9100;
+}
+
+#font-loader {
+  font-family: "Chilanka";
+}
+
+.homeTitle {
+  padding-left: 15%;
+  justify-content: center;
+  width: 70%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  font-family: "Tektur", cursive;
+  animation: fadeToRight 3s forwards;
+}
+
+.titlebox {
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  padding: 0;
+  top: 10%;
+  flex-direction: column;
+}
+
+.title {
+  color: white;
+  font-size: 1.5rem;
+  width: 70%;
+}
+
+.scndryTitlebox {
+  width: 100%;
+  height: auto;
+  margin-bottom: 0.5rem;
+  padding: 0;
+  position: relative;
+  flex-direction: column;
+}
+
+.scndryTitle {
+  color: lightgray;
+  font-size: 1.5rem;
+  width: 100%;
+}
+@media only screen and (min-width: 900px) {
+  .homeTitle {
+    padding-left: 15%;
+    justify-content: center;
+    width: 70%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    font-family: "Tektur", cursive;
+  }
+
+  .titlebox {
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    padding: 0;
+    top: 10%;
+    flex-direction: column;
+  }
+
+  .title {
+    color: white;
+    font-size: 3rem;
+    width: 70%;
+  }
+
+  .scndryTitlebox {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+    padding: 0;
+    position: relative;
+    flex-direction: column;
+  }
+
+  .scndryTitle {
+    color: lightgray;
+    font-size: 1.5rem;
+    width: 100%;
+  }
+}
+
+.gamesbg {
+  position: fixed;
+  top: -60%;
+  right: -50%;
+}
