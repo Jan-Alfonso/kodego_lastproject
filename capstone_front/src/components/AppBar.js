@@ -12,12 +12,20 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import cleargameslogo from "../assets/cleargameslogo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const pages = ["Games", "About Us", "News"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Logout"];
 
 function NavAppBar() {
+  const Navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("login_token");
+    Navigate("/login");
+    console.log("logout");
+  };
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -105,7 +113,7 @@ function NavAppBar() {
             variant="h5"
             noWrap
             component={Link}
-            to="/" // Home link, you can specify the URL for your home page here
+            to="/Dashboard"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -162,7 +170,17 @@ function NavAppBar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Button
+                    sx={{
+                      mt: 1,
+                      color: "black",
+                      display: "block",
+                      textDecoration: "none",
+                    }}
+                    onClick={handleLogout}
+                  >
+                    {setting}
+                  </Button>
                 </MenuItem>
               ))}
             </Menu>

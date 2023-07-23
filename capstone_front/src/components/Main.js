@@ -2,14 +2,9 @@ import React from "react";
 import videoBG from "../assets/videoBG.mp4";
 import NavAppBar from "./AppBar";
 import PaperCG from "./Paper";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
-function Home() {
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    localStorage.removeItem("login_token");
-    navigate("/login");
-  };
+function Dashboard() {
   return (
     <>
       <div className="main">
@@ -37,4 +32,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Dashboard;

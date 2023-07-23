@@ -8,12 +8,16 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { CircularProgress, Container } from "@mui/material";
+import { Alert, CircularProgress, Container } from "@mui/material";
 import loginBG from "../assets/loginBG.mp4";
 import welcomeplayer from "../assets/welcomeplayer.jpg";
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function SignInSide() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,7 +25,7 @@ export default function SignInSide() {
   const [error, setError] = useState("");
   const [SubmitLoading, setSubmitLoading] = useState(false);
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
     setError("");
     setSubmitLoading(true);
@@ -29,17 +33,36 @@ export default function SignInSide() {
     if (!validateForm()) {
       setSubmitLoading(false);
       return;
+    } else {
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/login",
+          formData
+        );
+        const token = response.data.token;
+        localStorage.setItem("login_token", token);
+        navigate("/");
+      } catch (error) {
+        let errorMessage = error.response.data.error;
+        setError(errorMessage);
+        console.log(error.response.data.error);
+      }
+      setSubmitLoading(false);
     }
   };
 
   const validateForm = () => {
-    if (formData.email === undefined || formData.email === "") {
-      setError("Email is Required");
+    if (formData.email === "" && formData.password === "") {
+      setError("Email and Password is Required");
       return false;
     } else if (formData.password === undefined || formData.password === "") {
       setError("Password is Required");
       return false;
+    } else if (formData.email === undefined || formData.email === "") {
+      setError("Email is Required");
+      return false;
     }
+
     return true;
   };
 
@@ -59,6 +82,7 @@ export default function SignInSide() {
       email: data.get("email"),
       password: data.get("password"),
     });
+
     const styles = (theme) => ({
       textField: {
         width: "90%",
@@ -128,15 +152,13 @@ export default function SignInSide() {
                   color: "white",
                 }}
               >
-                <Typography component="h1" variant="h5">
-                  Sign in
-                </Typography>
                 <Box
                   component="form"
                   noValidate
                   onSubmit={handleSubmit}
                   sx={{ mt: 3 }}
                 >
+                  {error && <Alert severity="error">{error}</Alert>}
                   <TextField
                     margin="normal"
                     required
@@ -161,10 +183,6 @@ export default function SignInSide() {
                     value={formData.password}
                     onChange={handleChange}
                   />
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
                   <Button
                     type="submit"
                     onClick={handleLogin}
@@ -173,7 +191,11 @@ export default function SignInSide() {
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                   >
-                    {SubmitLoading ? <CircularProgress /> : ""}
+                    {SubmitLoading ? (
+                      <CircularProgress size={"50px"} sx={{ color: "white" }} />
+                    ) : (
+                      ""
+                    )}
                     Sign In
                   </Button>
                   <Grid container>

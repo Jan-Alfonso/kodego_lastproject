@@ -19,3 +19,8 @@ use App\Http\Controllers\UserLoginAuth;
 // });
 
 Route::post('/register',[UserLoginAuth::class,'register']);
+Route::post('/login',[UserLoginAuth::class,'login']);
+
+Route::middleware('auth:api')->group(function (){
+    Route::post('/logout',[UserLoginAuth::class,'logout']);
+});

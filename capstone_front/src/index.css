@@ -13,6 +13,18 @@
     transform: translateX(0);
   }
 }
+
+@keyframes errorFadeIn {
+  from {
+    opacity: 0%;
+    transform: translateY(-10%);
+  }
+  to {
+    opacity: 100%;
+    transform: translateY(0);
+  }
+}
+
 .main {
   width: 100%;
   height: 100vh;
@@ -111,12 +123,14 @@
   padding: 0;
   top: 10%;
   flex-direction: column;
+  font-family: "Tektur", cursive;
 }
 
 .title {
   color: white;
   font-size: 1.5rem;
   width: 70%;
+  font-family: "Tektur", cursive;
 }
 
 .scndryTitlebox {
@@ -181,4 +195,10 @@
   position: fixed;
   top: -60%;
   right: -50%;
+}
+
+.errorAnimate {
+  animation: errorFade 2s forwards;
+  animation-fill-mode: forwards;
+  transition: 1s ease-in-out;
 }

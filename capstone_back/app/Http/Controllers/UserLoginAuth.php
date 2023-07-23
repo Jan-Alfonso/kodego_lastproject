@@ -10,7 +10,7 @@ use App\Models\User;
 class UserLoginAuth extends Controller
 {
     //
-    public function register(Request $request){
+    public function register(request $request){
         $validator = Validator::make($request->all(),[
             'name' => 'required|string',
             'email' => 'required|string|email',
@@ -18,7 +18,7 @@ class UserLoginAuth extends Controller
         ]);
 
         if($validator->fails()){
-            return response(['error' => $validator->errors()->all()],400);
+            return response(['error'=> $validator->errors()->all()],422);
         }
 
         $password_hash = Hash::make($request->password);
@@ -27,10 +27,53 @@ class UserLoginAuth extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => $password_hash
+
         ]);
 
-        $token = $user->createToken('PassToken')->accessToken;
+        $token = $user->createToken('LaravelTokenPassword')->accessToken;
 
-        $response = ['token' => $token, 'message' => 'User Successfully Registered'];
+        $response = ['token' => $token, 'message' => 'User Successfully Created'];
+
+        return $response;
     }
+
+    public function login(Request $request){
+        $validator = Validator::make($request->all(),[
+            'email' => 'required|string|email',
+            'password' => 'required|string'
+        ]);
+
+        if($validator->fails()){
+            return response(['error'=> $validator->errors()->all()],422);
+        } 
+    
+
+
+$user = User::where('email',$request->email)->first();
+if($user){
+    $check_password = Hash::check($request->password,$user->password);
+
+if($check_password){
+    $token = $user->createToken('LaravelTokenPassword')->accessToken;
+        $response = ['token' => $token, 'message' => 'Successfully Logged In', 'user' => $user];
+        
+        return $response;
+
+}else{
+    return response(['error'=>'Invalid Password.'],422);
 }
+}else{
+    return response(['error'=>'Email does not exist!'],422);
+}
+
+}
+
+public function logout(request $request){
+    $token = $request->user()->token();
+    $token->revoke();
+    $response = ['message'=>'Logged Out'];
+    return $response;
+}
+
+}
+

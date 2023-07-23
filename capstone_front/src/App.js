@@ -5,11 +5,12 @@ import {
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
-import Home from "./components/Main";
+import Dashboard from "./components/Main";
 import SignInSide from "./components/Login";
 import AboutUs from "./components/AboutUsPage";
 import Games from "./components/GamesPage";
 import WhatsNew from "./components/WhatsNewPage";
+import NavAppBar from "./components/AppBar";
 
 function App() {
   const isAuthenticated = localStorage.getItem("login_token");
@@ -19,8 +20,12 @@ function App() {
         <Routes>
           <Route path="/login" element={<SignInSide />} />
           <Route
+            path="/dashboard"
+            element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
+          />
+          <Route
             path="/"
-            element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
+            element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
           />
           <Route
             path="/games"

@@ -10,6 +10,6 @@ class Dota extends Model
     use HasFactory;
 
     protected $fillable = [
-        'dota_item', 'dota_item_details', 'dota_item_rarity'
+        'dota_item', 'dota_itemDetails', 'dota_rarity'
     ];
 }
