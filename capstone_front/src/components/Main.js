@@ -21,6 +21,9 @@ function Dashboard() {
               <div className="bluebox"></div>
               <div className="yellowbox"></div>
             </div>
+            <div className="scndryTitlebox">
+              <div className="scndryTitle">Top Featured Games</div>
+            </div>
             <PaperCG />
           </div>
         </div>

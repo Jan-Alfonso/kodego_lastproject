@@ -1,0 +1,29 @@
+.about-us-container {
+  background-image: url("../assets/gamesbg.jpg");
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+}
+
+.cglogo {
+  width: 10rem;
+}
+
+.flexblueyellow {
+  display: flex;
+  height: 1%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.bluebox {
+  width: 30%;
+  height: 100%;
+  background-color: #83eeff;
+}
+.yellowbox {
+  width: 10%;
+  height: 100%;
+  background-color: #ff9100;
+}

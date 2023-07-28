@@ -1,19 +1,19 @@
 import React from "react";
 import NavAppBar from "./AppBar";
-import gamesbg from "../assets/gamesbg.jpg";
+import AboutUsContent from "./AboutUsContent";
+import "./Bg.css";
 
 function AboutUs() {
   return (
-    <div>
-      <div className="main">
-        <div className="overlay">
-          <NavAppBar />
-        </div>
-        <div className="gamesbg">
-          <img src={gamesbg} alt="pagesbg" />
-        </div>
+    <>
+      <div>
+        <div className="about-us-container"></div>
       </div>
-    </div>
+      <div>
+        <NavAppBar />
+        <AboutUsContent />
+      </div>
+    </>
   );
 }
 

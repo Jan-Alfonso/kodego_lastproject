@@ -35,36 +35,45 @@ function GamesTable() {
   }, []);
 
   return (
-    <div
-      style={{
-        marginTop: "0%",
-        marginLeft: "10%",
-        marginRight: "10%",
-      }}
-    >
-      {loading ? (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Box sx={{ width: "100%" }}>
-            <LinearProgress />
-          </Box>
-        </div>
-      ) : (
-        <MUIDataTable
-          loading={loading}
-          title={"Popular E-Games in the Philippines"}
-          data={data.map((d) => {
-            return [
-              d.game_name,
-              d.game_category,
-              d.game_price,
-              d.game_download,
-            ];
-          })}
-          columns={columns}
-          options={options}
-        />
-      )}
-    </div>
+    <>
+      <div
+        style={{
+          marginTop: "10rem",
+          marginLeft: "10%",
+          marginRight: "10%",
+          marginBottom: "10rem",
+        }}
+      >
+        <div className="pagesTitle">Top Games in the Philippines</div>
+        {loading ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Box sx={{ width: "100%" }}>
+              <LinearProgress />
+            </Box>
+          </div>
+        ) : (
+          <MUIDataTable
+            loading={loading}
+            title={"Popular E-Games in the Philippines"}
+            data={data.map((d) => {
+              return [
+                d.game_name,
+                d.game_category,
+                d.game_price,
+                d.game_download,
+              ];
+            })}
+            columns={columns}
+            options={options}
+          />
+        )}
+      </div>
+    </>
   );
 }
 

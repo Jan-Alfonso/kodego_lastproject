@@ -6,6 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import valheim from "../assets/Valheim_logo.png";
 import dota from "../assets/dota.png";
+import diabloI from "../assets/diabloI.png";
 import { Link } from "react-router-dom";
 import { Grid } from "@mui/material";
 
@@ -132,13 +133,13 @@ export default function MediaControlCard() {
           </Link>
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={4}>
-          <Link to="https://store.steampowered.com/app/892970/Valheim/">
+          <Link to="https://diabloimmortal.blizzard.com/en-us/">
             <Card className="card" sx={cardStyle} flexDirection="row">
               <CardMedia
                 component="img"
                 sx={cardMediaStyle}
-                image={valheim}
-                alt="valheim"
+                image={diabloI}
+                alt="DiabloI"
               />
               <Box
                 sx={{
@@ -151,14 +152,14 @@ export default function MediaControlCard() {
                   sx={{ margin: 1, p: 0, "&:last-child": { pb: 0 } }}
                 >
                   <Typography component="div" variant="h5" sx={typographyStyle}>
-                    Play Valheim
+                    Play Diablo Immortal
                   </Typography>
                   <Typography
                     variant="subtitle1"
                     color="text.secondary"
                     sx={subtitleStyle}
                   >
-                    -Steam
+                    -Mobile
                   </Typography>
                 </CardContent>
               </Box>
