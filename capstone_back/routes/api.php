@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PhigamesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserLoginAuth;
@@ -23,4 +24,7 @@ Route::post('/login',[UserLoginAuth::class,'login']);
 
 Route::middleware('auth:api')->group(function (){
     Route::post('/logout',[UserLoginAuth::class,'logout']);
+    Route::resource('/games',PhigamesController::class);
 });
+
+

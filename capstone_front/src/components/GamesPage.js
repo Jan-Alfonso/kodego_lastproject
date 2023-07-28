@@ -9,6 +9,7 @@ function Games() {
       <div className="main">
         <div className="overlay">
           <NavAppBar />
+          <div className="pagesTitle">Top Games in the Philippines</div>
           <EnhancedTable />
         </div>
         <div className="gamesbg">

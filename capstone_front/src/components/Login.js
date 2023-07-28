@@ -7,23 +7,52 @@ import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import { Alert, CircularProgress, Container } from "@mui/material";
+import { Alert, CircularProgress, Container, Modal } from "@mui/material";
 import loginBG from "../assets/loginBG.mp4";
 import welcomeplayer from "../assets/welcomeplayer.jpg";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  borderRadius: "20px",
+  boxShadow: 24,
+  pt: 5,
+  px: 5,
+  pb: 3,
+};
+
 export default function SignInSide() {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const [regData, setRegData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
   const [error, setError] = useState("");
+  const [regError, setRegError] = useState("");
   const [SubmitLoading, setSubmitLoading] = useState(false);
+  const [regSubmitLoading, setRegSubmitLoading] = useState(false);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -50,7 +79,6 @@ export default function SignInSide() {
       setSubmitLoading(false);
     }
   };
-
   const validateForm = () => {
     if (formData.email === "" && formData.password === "") {
       setError("Email and Password is Required");
@@ -66,6 +94,54 @@ export default function SignInSide() {
     return true;
   };
 
+  const handleRegister = async (event) => {
+    event.preventDefault();
+    setRegError("");
+    setRegSubmitLoading(true);
+
+    if (!validateRegForm()) {
+      setRegSubmitLoading(false);
+      return;
+    } else {
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/register",
+          regData
+        );
+        const token = response.data.token;
+        localStorage.setItem("login_token", token);
+        navigate("/");
+      } catch (regError) {
+        let errorMessage = regError.response.data.regError;
+        setRegError(errorMessage);
+        console.log(regError.response.data.regError);
+      }
+      setRegSubmitLoading(false);
+    }
+  };
+
+  const validateRegForm = () => {
+    if (
+      regData.email === "" &&
+      regData.password === "" &&
+      regData.name === ""
+    ) {
+      setRegError("Please complete the required text field");
+      return false;
+    } else if (regData.password === undefined || regData.password === "") {
+      setRegError("Password is Required");
+      return false;
+    } else if (regData.email === undefined || regData.email === "") {
+      setRegError("Email is Required");
+      return false;
+    } else if (regData.name === undefined || regData.name === "") {
+      setRegError("Name is Required");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleChange = (event) => {
     console.log(event.target.name, event.target.value);
 
@@ -75,10 +151,43 @@ export default function SignInSide() {
     }));
   };
 
+  const handleRegChange = (event) => {
+    console.log(event.target.name, event.target.value);
+
+    setRegData((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
+
+    const styles = (theme) => ({
+      textField: {
+        width: "90%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        paddingBottom: 0,
+        marginTop: 0,
+        fontWeight: 500,
+      },
+      input: {
+        color: "white",
+      },
+    });
+  };
+
+  const handleRegSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      name: data.get("name"),
       email: data.get("email"),
       password: data.get("password"),
     });
@@ -200,13 +309,76 @@ export default function SignInSide() {
                   </Button>
                   <Grid container>
                     <Grid item className="mx-auto">
-                      <Link
-                        href="/login"
-                        variant="body2"
-                        sx={{ display: "flex" }}
+                      <Button onClick={handleOpen}>
+                        Don't have an account? Sign Up
+                      </Button>
+                      <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="parent-modal-title"
+                        aria-describedby="parent-modal-description"
                       >
-                        {"Don't have an account? Sign Up"}
-                      </Link>
+                        <Box
+                          sx={{ ...modalStyle, width: 400 }}
+                          onSubmit={handleRegSubmit}
+                        >
+                          <h2 id="parent-modal-title" className="text-center">
+                            Sign Up
+                          </h2>
+
+                          {regError && (
+                            <Alert severity="error">{regError}</Alert>
+                          )}
+                          <TextField
+                            sx={{ my: 1, width: "100%" }}
+                            name="name"
+                            required
+                            id="outlined-required"
+                            label="Name"
+                            value={regData.name}
+                            onChange={handleRegChange}
+                          />
+                          <TextField
+                            sx={{ my: 1, width: "100%" }}
+                            name="email"
+                            required
+                            id="outlined-required"
+                            label="Email"
+                            value={regData.email}
+                            onChange={handleRegChange}
+                          />
+                          <TextField
+                            sx={{ my: 1, width: "100%" }}
+                            name="password"
+                            required
+                            id="outlined-required"
+                            label="Password"
+                            type="password"
+                            value={regData.password}
+                            onChange={handleRegChange}
+                          />
+                          <Button
+                            onClick={handleRegister}
+                            fullWidth
+                            variant="contained"
+                            sx={{
+                              display: "flex",
+                              marginTop: 4,
+                              marginBottom: 4,
+                            }}
+                          >
+                            {regSubmitLoading ? (
+                              <CircularProgress
+                                size={"50px"}
+                                sx={{ color: "white" }}
+                              />
+                            ) : (
+                              ""
+                            )}
+                            {"Submit"}
+                          </Button>
+                        </Box>
+                      </Modal>
                     </Grid>
                   </Grid>
                 </Box>

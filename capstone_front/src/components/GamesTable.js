@@ -1,27 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MUIDataTable from "mui-datatables";
-
-const columns = ["Name", "Company", "City", "State"];
-
-const data = [
-  ["Joe James", "Test Corp", "Yonkers", "NY"],
-  ["John Walsh", "Test Corp", "Hartford", "CT"],
-  ["Bob Herm", "Test Corp", "Tampa", "FL"],
-  ["James Houston", "Test Corp", "Dallas", "TX"],
-];
+import axios from "axios";
+import LinearProgress from "@mui/material/LinearProgress";
+import { Box } from "@mui/system";
 
 const options = {
   filterType: "checkbox",
+  selectableRows: false,
 };
+
 function GamesTable() {
+  const columns = ["Game", "Category", "Price", "Download"];
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/games", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("login_token"),
+          },
+        });
+        let phigames = response.data.phigames;
+        setData(phigames);
+        setLoading(false);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div style={{ marginTop: "10%", marginLeft: "10%", marginRight: "10%" }}>
-      <MUIDataTable
-        title={"Employee List"}
-        data={data}
-        columns={columns}
-        options={options}
-      />
+    <div
+      style={{
+        marginTop: "0%",
+        marginLeft: "10%",
+        marginRight: "10%",
+      }}
+    >
+      {loading ? (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Box sx={{ width: "100%" }}>
+            <LinearProgress />
+          </Box>
+        </div>
+      ) : (
+        <MUIDataTable
+          loading={loading}
+          title={"Popular E-Games in the Philippines"}
+          data={data.map((d) => {
+            return [
+              d.game_name,
+              d.game_category,
+              d.game_price,
+              d.game_download,
+            ];
+          })}
+          columns={columns}
+          options={options}
+        />
+      )}
     </div>
   );
 }

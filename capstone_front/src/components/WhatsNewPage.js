@@ -1,12 +1,17 @@
 import React from "react";
 import NavAppBar from "./AppBar";
+import gamesbg from "../assets/gamesbg.jpg";
 
 function WhatsNew() {
   return (
     <div>
-      <NavAppBar />
-      <div>
-        <h1>hello</h1>
+      <div className="main">
+        <div className="overlay">
+          <NavAppBar />
+        </div>
+        <div className="gamesbg">
+          <img src={gamesbg} alt="pagesbg" />
+        </div>
       </div>
     </div>
   );

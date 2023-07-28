@@ -13,12 +13,16 @@ class UserLoginAuth extends Controller
     public function register(request $request){
         $validator = Validator::make($request->all(),[
             'name' => 'required|string',
-            'email' => 'required|string|email',
+            'email' => 'required|string|email|unique:users',
             'password' => 'required|string'
         ]);
 
-        if($validator->fails()){
-            return response(['error'=> $validator->errors()->all()],422);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            if ($errors->has('email')) {
+                return response(['regError' => 'Email is already taken.'], 422);
+            }
+            return response(['regError' => $errors->all()], 422);
         }
 
         $password_hash = Hash::make($request->password);
