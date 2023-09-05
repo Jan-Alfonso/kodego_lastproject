@@ -19,25 +19,29 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<SignInSide />} />
-          <Route
+           {/* <Route
             path="/dashboard"
             element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
+          /> */}
+          <Route
+            path="/dashboard"
+            element={<Dashboard/>}
           />
           <Route
             path="/"
-            element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
+            element={<Dashboard />}
           />
           <Route
             path="/games"
-            element={isAuthenticated ? <Games /> : <Navigate to="/login" />}
+            element={<Games />}
           />
           <Route
             path="/about-us"
-            element={isAuthenticated ? <AboutUs /> : <Navigate to="/login" />}
+            element={<AboutUs />}
           />
           <Route
             path="/news"
-            element={isAuthenticated ? <WhatsNew /> : <Navigate to="/login" />}
+            element={<WhatsNew />}
           />
         </Routes>
       </Router>

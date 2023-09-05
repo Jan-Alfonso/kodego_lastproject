@@ -3,6 +3,7 @@ import MUIDataTable from "mui-datatables";
 import axios from "axios";
 import LinearProgress from "@mui/material/LinearProgress";
 import { Box } from "@mui/system";
+import { Button, Modal, Typography } from "@mui/material";
 
 const options = {
   filterType: "checkbox",
@@ -45,6 +46,7 @@ function GamesTable() {
         }}
       >
         <div className="pagesTitle">Top Games in the Philippines</div>
+
         {loading ? (
           <div
             style={{

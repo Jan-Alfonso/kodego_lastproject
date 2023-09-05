@@ -10,20 +10,3 @@
   width: 10rem;
 }
 
-.flexblueyellow {
-  display: flex;
-  height: 1%;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.bluebox {
-  width: 30%;
-  height: 100%;
-  background-color: #83eeff;
-}
-.yellowbox {
-  width: 10%;
-  height: 100%;
-  background-color: #ff9100;
-}
